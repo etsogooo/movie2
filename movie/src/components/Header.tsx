@@ -1,10 +1,5 @@
 "use client";
 
-import { useContext } from "react";
-
-import { useEffect, useState } from "react";
-import { ACCESS_TOKEN, ThemeContext } from "./Context";
-import axios from "axios";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Select, SelectTrigger } from "@radix-ui/react-select";
@@ -16,14 +11,12 @@ import {
 } from "./ui/select";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
-import { useGenres } from "./Context";
-import { useSearchParams } from "next/navigation";
+import { ThemeContext, useGenres } from "./Context";
+import { useContext } from "react";
 
 export const Header = () => {
-  //   const searchParams = useSearchParams();
-  //   const genre = searchParams.get("genre");
-
   const { genres } = useGenres();
+  const { setIsDark, isDark } = useContext(ThemeContext);
 
   return (
     <div className="w-[100vw] h-[59px] flex justify-between items-center border border-amber-300">
@@ -57,7 +50,7 @@ export const Header = () => {
             <SelectGroup>
               <SelectLabel>See lists of movies by genre</SelectLabel>
               <div className="flex flex-wrap gap-4 w-[400px]">
-                {genres.map((item, name) => (
+                {genres.map((item) => (
                   <Link key={item.id} href={`/search?genre=${item.id}`}>
                     <Badge className="flex items-center gap-2">
                       {item.name}

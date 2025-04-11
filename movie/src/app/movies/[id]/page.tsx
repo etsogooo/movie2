@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { ACCESS_TOKEN, Movie, Response } from "@/app/_components/Upcoming";
+import { ACCESS_TOKEN, Movie } from "@/app/_components/Upcoming";
 import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -19,10 +19,21 @@ type MovieDetails = {
   poster_path: string;
 };
 
+type Staff = {
+  cast: { name: string }[];
+};
+type Trailer = {
+  results: { key: string }[];
+};
+
 const MoviePage = () => {
   const { id } = useParams<Params>();
 
   const [movie, setMovie] = useState<MovieDetails | null>(null);
+  const [similar, setSimilar] = useState<Movie[]>([]);
+  const [staffinfo, setStaffinfo] = useState<Staff | null>(null);
+  const [trailer, setTrailer] = useState<Trailer | null>(null);
+
   useEffect(() => {
     const getMovie = async () => {
       const { data } = await axios.get(
@@ -38,7 +49,6 @@ const MoviePage = () => {
     getMovie();
   }, [id]);
 
-  const [similar, setSimilar] = useState<Movie[]>([]);
   useEffect(() => {
     const getSimilar = async () => {
       const { data } = await axios.get(
@@ -55,7 +65,6 @@ const MoviePage = () => {
     getSimilar();
   }, [id]);
 
-  const [staffinfo, setStaffinfo] = useState(null);
   useEffect(() => {
     const getStaffinfo = async () => {
       const { data } = await axios.get(
@@ -72,7 +81,6 @@ const MoviePage = () => {
     getStaffinfo();
   }, [id]);
 
-  const [trailer, setTrailer] = useState();
   useEffect(() => {
     const getTrailer = async () => {
       const { data } = await axios.get(

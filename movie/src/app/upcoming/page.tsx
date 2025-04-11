@@ -62,8 +62,8 @@ export default function UpComingMovies() {
 
       <div className="grid grid-cols-5">
         {movies.map((movie) => (
-          <Link href={`/movies/${movie.id}`}>
-            <div key={movie.id}>
+          <Link href={`/movies/${movie.id}`} key={movie.id}>
+            <div>
               <img
                 src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
               />

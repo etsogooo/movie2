@@ -2,7 +2,6 @@
 import {
   createContext,
   PropsWithChildren,
-  ReactNode,
   useContext,
   useEffect,
   useState,
@@ -10,7 +9,7 @@ import {
 
 /////////////////////////////////////////// CONTEXT ELEMENTS //////////////////////////////////////////
 
-type ThemeContextType = {
+export type ThemeContextType = {
   isDark: boolean;
   setIsDark: (a: boolean) => void;
 };
@@ -20,7 +19,14 @@ export const ThemeContext = createContext<ThemeContextType>(
 );
 
 export const Provider = ({ children }: PropsWithChildren) => {
-  const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "1");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const darkIs = localStorage.getItem("theme") === "1";
+    if (darkIs) {
+      setIsDark(true);
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem("theme", isDark ? "1" : "0");
